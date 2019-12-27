@@ -45,9 +45,7 @@ final class Container implements ContainerInterface
             $factory = new Factory($this->factories[$id], $factory);
         }
 
-        if (isset($this->services[$id])) {
-            unset($this->services[$id]);
-        }
+        unset($this->services[$id]);
 
         $this->factories[$id] = $factory;
 
@@ -61,15 +59,15 @@ final class Container implements ContainerInterface
      */
     public function get($id)
     {
-        if (!isset($this->factories[$id])) {
-            throw NotFoundException::create($id);
+        if (isset($this->services[$id])) {
+            return $this->services[$id];
         }
 
-        if (!isset($this->services[$id])) {
-            $this->services[$id] = $this->create($id);
-        }
+        $service = $this->create($id);
 
-        return $this->services[$id];
+        $this->services[$id] = $service;
+
+        return $service;
     }
 
     /**
@@ -85,6 +83,10 @@ final class Container implements ContainerInterface
      */
     private function create(string $id)
     {
+        if (!isset($this->factories[$id])) {
+            throw NotFoundException::create($id);
+        }
+
         try {
             return ($this->factories[$id])($this);
         } catch (\Throwable $throwable) {
