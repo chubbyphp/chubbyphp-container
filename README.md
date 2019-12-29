@@ -68,12 +68,15 @@ $container->factory(MyService::class, static function (ContainerInterface $conta
 });
 
 // existing (extend)
-$container->factory(MyService::class, static function (ContainerInterface $container, callable $previous) {
-    $myService = $previous($container);
-    $myService->setLogger($container->get(LoggerInterface::class));
+$container->factory(
+    MyService::class,
+    static function (ContainerInterface $container, callable $previous) {
+        $myService = $previous($container);
+        $myService->setLogger($container->get(LoggerInterface::class));
 
-    return $myService;
-});
+        return $myService;
+    }
+);
 ```
 
 ### Get
