@@ -7,7 +7,6 @@ namespace Chubbyphp\Tests\Container\Unit;
 use Chubbyphp\Container\Container;
 use Chubbyphp\Container\Exceptions\ContainerException;
 use Chubbyphp\Container\Exceptions\NotFoundException;
-use Chubbyphp\Mock\MockByCallsTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -18,8 +17,6 @@ use Psr\Container\ContainerInterface;
  */
 final class ContainerTest extends TestCase
 {
-    use MockByCallsTrait;
-
     public function testConstruct(): void
     {
         $container = new Container([
