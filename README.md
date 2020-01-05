@@ -28,6 +28,8 @@ composer require chubbyphp/chubbyphp-container "^1.0"
 
 ### Factories
 
+### Without a ServiceFactory
+
 ```php
 <?php
 
@@ -42,6 +44,35 @@ $container->factories([
         return new MyService($container->get(LoggerInterface::class));
     },
 ]);
+```
+
+### With a ServiceFactory
+
+```php
+<?php
+
+use App\Service\MyService;
+use Chubbyphp\Container\Container;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+
+final class MyServiceFactory
+{
+    /**
+     * @return array<string, callable>
+     */
+    public function __invoke(): array
+    {
+        return [
+            MyService::class => static function (ContainerInterface $container) {
+                return new MyService($container->get(LoggerInterface::class));
+            },
+        ];
+    }
+}
+
+$container = new Container();
+$container->factories((new MyServiceFactory())());
 ```
 
 ### Factory
