@@ -9,7 +9,7 @@
 
 ## Description
 
-A simple PSR-11 container implementation.
+A simple PSR-11 container implementation. [DI Container Benchmark][3].
 
 ## Requirements
 
@@ -142,3 +142,5 @@ Dominik Zogg 2020
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-container
 
 [2]: https://packagist.org/packages/psr/container
+
+[3]: https://rawgit.com/kocsismate/php-di-container-benchmarks/master/var/benchmark.html
