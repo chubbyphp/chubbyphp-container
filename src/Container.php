@@ -59,15 +59,7 @@ final class Container implements ContainerInterface
      */
     public function get($id)
     {
-        if (isset($this->services[$id])) {
-            return $this->services[$id];
-        }
-
-        $service = $this->create($id);
-
-        $this->services[$id] = $service;
-
-        return $service;
+        return $this->services[$id] ?? $this->services[$id] = $this->create($id);
     }
 
     /**
