@@ -96,11 +96,11 @@ final class Container implements ContainerInterface
      */
     public function get($id)
     {
-        try {
-            return $this->services[$id] ?? $this->services[$id] = $this->createFromFactory($id);
-        } catch (NotFoundException $notFoundException) {
+        if (isset($this->prototypeFactories[$id])) {
             return $this->createFromPrototypeFactory($id);
         }
+
+        return $this->services[$id] ?? $this->services[$id] = $this->createFromFactory($id);
     }
 
     /**
@@ -132,10 +132,6 @@ final class Container implements ContainerInterface
      */
     private function createFromPrototypeFactory(string $id)
     {
-        if (!isset($this->prototypeFactories[$id])) {
-            throw NotFoundException::create($id);
-        }
-
         try {
             return ($this->prototypeFactories[$id])($this);
         } catch (\Throwable $throwable) {
