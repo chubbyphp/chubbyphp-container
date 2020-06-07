@@ -21,14 +21,12 @@ A simple PSR-11 container implementation. [DI Container Benchmark][3].
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-container][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-container "^1.0"
+composer require chubbyphp/chubbyphp-container "^1.1"
 ```
 
 ## Usage
 
 ### Factories
-
-### Without a ServiceFactory
 
 ```php
 <?php
@@ -46,37 +44,7 @@ $container->factories([
 ]);
 ```
 
-### With a ServiceFactory
-
-```php
-<?php
-
-use App\Service\MyService;
-use Chubbyphp\Container\Container;
-use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
-
-final class MyServiceFactory
-{
-    /**
-     * @return array<string, callable>
-     */
-    public function __invoke(): array
-    {
-        return [
-            MyService::class => static function (ContainerInterface $container) {
-                return new MyService($container->get(LoggerInterface::class));
-            },
-        ];
-    }
-}
-
-$container = new Container();
-$container->factories((new MyServiceFactory())());
-```
-
 ### Factory
-
 
 ```php
 <?php
@@ -100,6 +68,62 @@ $container->factory(MyService::class, static function (ContainerInterface $conta
 
 // existing (extend)
 $container->factory(
+    MyService::class,
+    static function (ContainerInterface $container, callable $previous) {
+        $myService = $previous($container);
+        $myService->setLogger($container->get(LoggerInterface::class));
+
+        return $myService;
+    }
+);
+```
+
+### Prototype Factories
+
+**each get will return a new instance**
+
+```php
+<?php
+
+use App\Service\MyService;
+use Chubbyphp\Container\Container;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+
+$container = new Container();
+$container->prototypeFactories([
+    MyService::class => static function (ContainerInterface $container) {
+        return new MyService($container->get(LoggerInterface::class));
+    },
+]);
+```
+
+### Prototype Factory
+
+**each get will return a new instance**
+
+```php
+<?php
+
+use App\Service\MyService;
+use Chubbyphp\Container\Container;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+
+$container = new Container();
+
+// new
+$container->prototypeFactory(MyService::class, static function (ContainerInterface $container) {
+    return new MyService($container->get(LoggerInterface::class));
+});
+
+// existing (replace)
+$container->prototypeFactory(MyService::class, static function (ContainerInterface $container) {
+    return new MyService($container->get(LoggerInterface::class));
+});
+
+// existing (extend)
+$container->prototypeFactory(
     MyService::class,
     static function (ContainerInterface $container, callable $previous) {
         $myService = $previous($container);

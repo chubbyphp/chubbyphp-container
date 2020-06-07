@@ -6,6 +6,7 @@ namespace Chubbyphp\Tests\Container\Unit;
 
 use Chubbyphp\Container\Container;
 use Chubbyphp\Container\Exceptions\ContainerException;
+use Chubbyphp\Container\Exceptions\ExistsException;
 use Chubbyphp\Container\Exceptions\NotFoundException;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -17,6 +18,9 @@ use Psr\Container\ContainerInterface;
  */
 final class ContainerTest extends TestCase
 {
+    /**
+     * @covers \Chubbyphp\Container\Container::__construct
+     */
     public function testConstruct(): void
     {
         $container = new Container([
@@ -25,79 +29,77 @@ final class ContainerTest extends TestCase
             },
         ]);
 
-        $reflectionFactories = new \ReflectionProperty($container, 'factories');
-        $reflectionFactories->setAccessible(true);
-
-        $factories = $reflectionFactories->getValue($container);
-
-        self::assertCount(1, $factories);
-
-        $factory = array_shift($factories);
-
-        $service = $factory($container);
+        $service = $container->get('id');
 
         self::assertInstanceOf(\stdClass::class, $service);
     }
 
+    /**
+     * @covers \Chubbyphp\Container\Container::factories
+     */
     public function testFactories(): void
     {
         $container = new Container();
+
         $container->factories([
             'id' => static function () {
                 return new \stdClass();
             },
         ]);
 
-        $reflectionFactories = new \ReflectionProperty($container, 'factories');
-        $reflectionFactories->setAccessible(true);
-
-        $factories = $reflectionFactories->getValue($container);
-
-        self::assertCount(1, $factories);
-
-        $factory = array_shift($factories);
-
-        $service = $factory($container);
+        $service = $container->get('id');
 
         self::assertInstanceOf(\stdClass::class, $service);
     }
 
+    /**
+     * @covers \Chubbyphp\Container\Container::factory
+     */
+    public function testFactoryWithExistingPrototypeFactory(): void
+    {
+        $this->expectException(ExistsException::class);
+        $this->expectExceptionMessage('Factory with id "id" already exists as "prototype factory"');
+
+        $container = new Container();
+
+        $container->prototypeFactory('id', static function () {
+            return new \stdClass();
+        });
+
+        $container->factory('id', static function () {
+            return new \stdClass();
+        });
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::factory
+     */
     public function testFactory(): void
     {
         $container = new Container();
+
         $container->factory('id', static function () {
             return new \stdClass();
         });
 
-        $reflectionFactories = new \ReflectionProperty($container, 'factories');
-        $reflectionFactories->setAccessible(true);
-
-        $factories = $reflectionFactories->getValue($container);
-
-        self::assertCount(1, $factories);
-
-        $factory = array_shift($factories);
-
-        $service = $factory($container);
+        $service = $container->get('id');
 
         self::assertInstanceOf(\stdClass::class, $service);
     }
 
+    /**
+     * @covers \Chubbyphp\Container\Container::factory
+     */
     public function testFactoryExtend(): void
     {
-        $factories = [];
-        $factories['id'] = static function () {
+        $container = new Container();
+
+        $container->factory('id', static function () {
             $object = new \stdClass();
             $object->key1 = 'value1';
 
             return $object;
-        };
-
-        $container = new Container();
-
-        $reflectionFactories = new \ReflectionProperty($container, 'factories');
-        $reflectionFactories->setAccessible(true);
-        $reflectionFactories->setValue($container, $factories);
+        });
 
         $container->factory('id', static function (ContainerInterface $container, callable $previous) {
             $object = $previous($container);
@@ -113,13 +115,7 @@ final class ContainerTest extends TestCase
             return $object;
         });
 
-        $factories = $reflectionFactories->getValue($container);
-
-        self::assertCount(1, $factories);
-
-        $factory = array_shift($factories);
-
-        $service = $factory($container);
+        $service = $container->get('id');
 
         self::assertInstanceOf(\stdClass::class, $service);
         self::assertSame('value1', $service->key1);
@@ -127,18 +123,16 @@ final class ContainerTest extends TestCase
         self::assertSame('value3', $service->key3);
     }
 
-    public function testReplace(): void
+    /**
+     * @covers \Chubbyphp\Container\Container::factory
+     */
+    public function testFactoryReplace(): void
     {
-        $factories = [];
-        $factories['id'] = static function (): void {
-            throw new \Exception('should not be called!');
-        };
-
         $container = new Container();
 
-        $reflectionFactories = new \ReflectionProperty($container, 'factories');
-        $reflectionFactories->setAccessible(true);
-        $reflectionFactories->setValue($container, $factories);
+        $container->factory('id', static function (): void {
+            throw new \Exception('should not be called!');
+        });
 
         $container->factory('id', static function () {
             $object = new \stdClass();
@@ -154,13 +148,7 @@ final class ContainerTest extends TestCase
             return $object;
         });
 
-        $factories = $reflectionFactories->getValue($container);
-
-        self::assertCount(1, $factories);
-
-        $factory = array_shift($factories);
-
-        $service = $factory($container);
+        $service = $container->get('id');
 
         self::assertInstanceOf(\stdClass::class, $service);
         self::assertSame('value1', $service->key1);
@@ -173,6 +161,7 @@ final class ContainerTest extends TestCase
     public function testFactoryReplaceAfterServiceInstanciated(): void
     {
         $container = new Container();
+
         $container->factory('id', static function () {
             return new \stdClass();
         });
@@ -186,26 +175,130 @@ final class ContainerTest extends TestCase
         self::assertNotSame($service1, $container->get('id'));
     }
 
-    public function testGet(): void
+    /**
+     * @covers \Chubbyphp\Container\Container::prototypeFactories
+     */
+    public function testPrototypeFactories(): void
     {
-        $factories = [];
-        $factories['id'] = static function () {
-            return new \stdClass();
-        };
-
         $container = new Container();
 
-        $reflectionFactories = new \ReflectionProperty($container, 'factories');
-        $reflectionFactories->setAccessible(true);
-        $reflectionFactories->setValue($container, $factories);
+        $container->prototypeFactories([
+            'id' => static function () {
+                return new \stdClass();
+            },
+        ]);
 
         $service = $container->get('id');
 
         self::assertInstanceOf(\stdClass::class, $service);
-
-        self::assertSame($service, $container->get('id'));
     }
 
+    /**
+     * @covers \Chubbyphp\Container\Container::prototypeFactory
+     */
+    public function testPrototypeFactoryWithExistingFactory(): void
+    {
+        $this->expectException(ExistsException::class);
+        $this->expectExceptionMessage('Factory with id "id" already exists as "factory"');
+
+        $container = new Container();
+
+        $container->factory('id', static function () {
+            return new \stdClass();
+        });
+
+        $container->prototypeFactory('id', static function () {
+            return new \stdClass();
+        });
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::prototypeFactory
+     */
+    public function testPrototypeFactory(): void
+    {
+        $container = new Container();
+
+        $container->prototypeFactory('id', static function () {
+            return new \stdClass();
+        });
+
+        $service = $container->get('id');
+
+        self::assertInstanceOf(\stdClass::class, $service);
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::prototypeFactory
+     */
+    public function testPrototypeFactoryExtend(): void
+    {
+        $container = new Container();
+
+        $container->prototypeFactory('id', static function () {
+            $object = new \stdClass();
+            $object->key1 = 'value1';
+
+            return $object;
+        });
+
+        $container->prototypeFactory('id', static function (ContainerInterface $container, callable $previous) {
+            $object = $previous($container);
+            $object->key2 = 'value2';
+
+            return $object;
+        });
+
+        $container->prototypeFactory('id', static function (ContainerInterface $container, callable $previous) {
+            $object = $previous($container);
+            $object->key3 = 'value3';
+
+            return $object;
+        });
+
+        $service = $container->get('id');
+
+        self::assertInstanceOf(\stdClass::class, $service);
+        self::assertSame('value1', $service->key1);
+        self::assertSame('value2', $service->key2);
+        self::assertSame('value3', $service->key3);
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::prototypeFactory
+     */
+    public function testPrototypeFactoryReplace(): void
+    {
+        $container = new Container();
+
+        $container->prototypeFactory('id', static function (): void {
+            throw new \Exception('should not be called!');
+        });
+
+        $container->prototypeFactory('id', static function () {
+            $object = new \stdClass();
+            $object->key1 = 'value1';
+
+            return $object;
+        });
+
+        $container->prototypeFactory('id', static function (ContainerInterface $container, callable $previous) {
+            $object = $previous($container);
+            $object->key2 = 'value2';
+
+            return $object;
+        });
+
+        $service = $container->get('id');
+
+        self::assertInstanceOf(\stdClass::class, $service);
+        self::assertSame('value1', $service->key1);
+        self::assertSame('value2', $service->key2);
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::get
+     */
     public function testGetWithMissingId(): void
     {
         $this->expectException(NotFoundException::class);
@@ -216,22 +309,16 @@ final class ContainerTest extends TestCase
         $container->get('id');
     }
 
-    public function testGetWithException(): void
+    /**
+     * @covers \Chubbyphp\Container\Container::get
+     */
+    public function testGetWithFactory(): void
     {
-        $this->expectException(ContainerException::class);
-        $this->expectExceptionMessage('Could not create service with id "id"');
-        $this->expectExceptionCode(1);
-
-        $factories = [];
-        $factories['id'] = static function (ContainerInterface $container): void {
-            $container->get('unknown');
-        };
-
         $container = new Container();
 
-        $reflectionFactories = new \ReflectionProperty($container, 'factories');
-        $reflectionFactories->setAccessible(true);
-        $reflectionFactories->setValue($container, $factories);
+        $container->factory('id', static function () {
+            return new \stdClass();
+        });
 
         $service = $container->get('id');
 
@@ -240,20 +327,96 @@ final class ContainerTest extends TestCase
         self::assertSame($service, $container->get('id'));
     }
 
-    public function testHas(): void
+    /**
+     * @covers \Chubbyphp\Container\Container::get
+     */
+    public function testGetWithPrototypeFactory(): void
+    {
+        $container = new Container();
+
+        $container->prototypeFactory('id', static function () {
+            return new \stdClass();
+        });
+
+        $service = $container->get('id');
+
+        self::assertInstanceOf(\stdClass::class, $service);
+
+        self::assertNotSame($service, $container->get('id'));
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::get
+     */
+    public function testGetWithFactoryAndException(): void
+    {
+        $this->expectException(ContainerException::class);
+        $this->expectExceptionMessage('Could not create service with id "id"');
+        $this->expectExceptionCode(1);
+
+        $container = new Container();
+
+        $container->factory('id', static function (ContainerInterface $container): void {
+            $container->get('unknown');
+        });
+
+        $service = $container->get('id');
+
+        self::assertInstanceOf(\stdClass::class, $service);
+
+        self::assertSame($service, $container->get('id'));
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::get
+     */
+    public function testGetWithPrototypeFactoryAndException(): void
+    {
+        $this->expectException(ContainerException::class);
+        $this->expectExceptionMessage('Could not create service with id "id"');
+        $this->expectExceptionCode(1);
+
+        $container = new Container();
+
+        $container->prototypeFactory('id', static function (ContainerInterface $container): void {
+            $container->get('unknown');
+        });
+
+        $service = $container->get('id');
+
+        self::assertInstanceOf(\stdClass::class, $service);
+
+        self::assertSame($service, $container->get('id'));
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::has
+     */
+    public function testHasWithFactory(): void
     {
         $container = new Container();
 
         self::assertFalse($container->has('id'));
 
-        $factories = [];
-        $factories['id'] = static function () {
+        $container->factory('id', static function () {
             return new \stdClass();
-        };
+        });
 
-        $reflectionFactories = new \ReflectionProperty($container, 'factories');
-        $reflectionFactories->setAccessible(true);
-        $reflectionFactories->setValue($container, $factories);
+        self::assertTrue($container->has('id'));
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::has
+     */
+    public function testHasWithPrototypeFactory(): void
+    {
+        $container = new Container();
+
+        self::assertFalse($container->has('id'));
+
+        $container->prototypeFactory('id', static function () {
+            return new \stdClass();
+        });
 
         self::assertTrue($container->has('id'));
     }
