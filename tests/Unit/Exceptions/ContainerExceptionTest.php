@@ -17,13 +17,7 @@ final class ContainerExceptionTest extends TestCase
     public function testConstruct(): void
     {
         $this->expectException(\Error::class);
-        $this->expectExceptionMessage(
-            sprintf(
-                'Call to private %s::__construct() from context \'%s\'',
-                ContainerException::class,
-                self::class
-            )
-        );
+        $this->expectExceptionMessage('Call to private');
 
         new ContainerException('test', 0);
     }
