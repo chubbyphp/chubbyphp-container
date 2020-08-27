@@ -21,7 +21,7 @@ A simple PSR-11 container implementation. [DI Container Benchmark][3].
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-container][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-container "^1.1"
+composer require chubbyphp/chubbyphp-container "^1.2"
 ```
 
 ## Usage
@@ -76,6 +76,18 @@ $container->factory(
         return $myService;
     }
 );
+```
+
+### Factory with Parameter
+
+```php
+<?php
+
+use Chubbyphp\Container\Container;
+use Chubbyphp\Container\Parameter;
+
+$container = new Container();
+$container->factory('key', new Parameter('value'));
 ```
 
 ### Prototype Factories
@@ -159,6 +171,10 @@ $container = new Container();
 $container->has(MyService::class);
 ```
 
+## Migration
+
+* [From Pimple][5]
+
 ## Copyright
 
 Dominik Zogg 2020
@@ -168,3 +184,5 @@ Dominik Zogg 2020
 [2]: https://packagist.org/packages/psr/container
 
 [3]: https://rawgit.com/kocsismate/php-di-container-benchmarks/master/var/benchmark.html
+
+[5]: doc/MigrateFromPimple.md
