@@ -11,6 +11,8 @@
 
 A simple PSR-11 container implementation. [DI Container Benchmark][3].
 
+There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-config][4].
+
 ## Requirements
 
  * php: ^7.2
@@ -180,9 +182,7 @@ $container->has(MyService::class);
 Dominik Zogg 2020
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-container
-
 [2]: https://packagist.org/packages/psr/container
-
 [3]: https://rawgit.com/kocsismate/php-di-container-benchmarks/master/var/benchmark.html
-
+[4]: https://github.com/chubbyphp/chubbyphp-laminas-config
 [5]: doc/MigrateFromPimple.md
