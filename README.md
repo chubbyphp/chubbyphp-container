@@ -9,7 +9,7 @@
 
 ## Description
 
-A simple PSR-11 container implementation. [DI Container Benchmark][3].
+A minimal PSR-11 container implementation. [DI Container Benchmark][3].
 
 There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-config][4].
 
