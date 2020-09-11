@@ -7,6 +7,19 @@
 [![Monthly Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-container/d/monthly)](https://packagist.org/packages/chubbyphp/chubbyphp-container)
 [![Daily Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-container/d/daily)](https://packagist.org/packages/chubbyphp/chubbyphp-container)
 
+[![bugs](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=bugs)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![code_smells](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=code_smells)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![coverage](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=coverage)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![duplicated_lines_density](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![ncloc](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=ncloc)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![sqale_rating](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![alert_status](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=alert_status)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![reliability_rating](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![security_rating](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=security_rating)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![sqale_index](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+[![vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
+
+
 ## Description
 
 A minimal PSR-11 container implementation. [DI Container Benchmark][3].
