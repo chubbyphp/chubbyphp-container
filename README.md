@@ -22,7 +22,7 @@
 
 ## Description
 
-A minimal PSR-11 container implementation. [DI Container Benchmark][3].
+A PSR-11 container implementation. [DI Container Benchmark][3].
 
 There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-config][4].
 
@@ -36,22 +36,29 @@ There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-confi
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-container][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-container "^1.2"
+composer require chubbyphp/chubbyphp-container "^1.3"
 ```
 
 ## Usage
 
-### Factories
+There are two PSR-11 implementations:
+
+ * `Chubbyphp\Container\Container` prototype (each get will return a new instance) and shared services
+ * `Chubbyphp\Container\MinimalContainer` shared services
+
+### MinimalContainer / Container
+
+#### Factories
 
 ```php
 <?php
 
 use App\Service\MyService;
-use Chubbyphp\Container\Container;
+use Chubbyphp\Container\MinimalContainer;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
-$container = new Container();
+$container = new MinimalContainer();
 $container->factories([
     MyService::class => static function (ContainerInterface $container) {
         return new MyService($container->get(LoggerInterface::class));
@@ -59,17 +66,17 @@ $container->factories([
 ]);
 ```
 
-### Factory
+#### Factory
 
 ```php
 <?php
 
 use App\Service\MyService;
-use Chubbyphp\Container\Container;
+use Chubbyphp\Container\MinimalContainer;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
-$container = new Container();
+$container = new MinimalContainer();
 
 // new
 $container->factory(MyService::class, static function (ContainerInterface $container) {
@@ -93,19 +100,48 @@ $container->factory(
 );
 ```
 
-### Factory with Parameter
+#### Factory with Parameter
 
 ```php
 <?php
 
-use Chubbyphp\Container\Container;
+use Chubbyphp\Container\MinimalContainer;
 use Chubbyphp\Container\Parameter;
 
-$container = new Container();
+$container = new MinimalContainer();
 $container->factory('key', new Parameter('value'));
 ```
 
-### Prototype Factories
+#### Get
+
+```php
+<?php
+
+use App\Service\MyService;
+use Chubbyphp\Container\MinimalContainer;
+
+$container = new MinimalContainer();
+
+$myService = $container->get(MyService::class);
+```
+
+#### Has
+
+```php
+<?php
+
+use App\Service\MyService;
+use Chubbyphp\Container\MinimalContainer;
+
+$container = new MinimalContainer();
+$container->has(MyService::class);
+```
+
+### Container
+
+All methods of the `MinimalContainer` and the following:
+
+#### Prototype Factories
 
 **each get will return a new instance**
 
@@ -125,7 +161,7 @@ $container->prototypeFactories([
 ]);
 ```
 
-### Prototype Factory
+#### Prototype Factory
 
 **each get will return a new instance**
 
@@ -159,31 +195,6 @@ $container->prototypeFactory(
         return $myService;
     }
 );
-```
-
-### Get
-
-```php
-<?php
-
-use App\Service\MyService;
-use Chubbyphp\Container\Container;
-
-$container = new Container();
-
-$myService = $container->get(MyService::class);
-```
-
-### Has
-
-```php
-<?php
-
-use App\Service\MyService;
-use Chubbyphp\Container\Container;
-
-$container = new Container();
-$container->has(MyService::class);
 ```
 
 ## Migration
