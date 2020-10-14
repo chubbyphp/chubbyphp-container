@@ -2,6 +2,7 @@
 
 [![Build Status](https://api.travis-ci.org/chubbyphp/chubbyphp-container.png?branch=master)](https://travis-ci.org/chubbyphp/chubbyphp-container)
 [![Coverage Status](https://coveralls.io/repos/github/chubbyphp/chubbyphp-container/badge.svg?branch=master)](https://coveralls.io/github/chubbyphp/chubbyphp-container?branch=master)
+[![Infection MSI](https://badge.stryker-mutator.io/github.com/chubbyphp/chubbyphp-container/master)](https://travis-ci.org/chubbyphp/chubbyphp-container)
 [![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-container/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-container)
 [![Total Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-container/downloads.png)](https://packagist.org/packages/chubbyphp/chubbyphp-container)
 [![Monthly Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-container/d/monthly)](https://packagist.org/packages/chubbyphp/chubbyphp-container)
@@ -28,7 +29,7 @@ There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-confi
 
 ## Requirements
 
- * php: ^7.2
+ * php: ^7.2|^8.0
  * [psr/container][2]: ^1.0
 
 ## Installation
