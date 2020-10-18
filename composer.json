@@ -21,12 +21,12 @@
         "chubbyphp/chubbyphp-dev-helper": "dev-master",
         "chubbyphp/chubbyphp-mock": "^1.4.5",
         "friendsofphp/php-cs-fixer": "^2.16@dev",
-        "infection/infection": "^0.15.3|^0.16.4",
+        "infection/infection": "^0.15.3|^0.16.6|^0.18.0",
         "php-coveralls/php-coveralls": "^2.4.1",
         "phploc/phploc": "^5.0|^6.0.2",
-        "phpstan/extension-installer": "^1.0.4",
-        "phpstan/phpstan": "^0.12.33",
-        "phpunit/phpunit": "^8.5.8|^9.2.6"
+        "phpstan/extension-installer": "^1.0.5",
+        "phpstan/phpstan": "^0.12.50",
+        "phpunit/phpunit": "^8.5.8|^9.4.1"
     },
     "conflict": {
         "ocramius/package-versions": ">=1.10"
