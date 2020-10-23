@@ -6,13 +6,14 @@ namespace Chubbyphp\Container;
 
 use Chubbyphp\Container\Exceptions\ContainerException;
 use Chubbyphp\Container\Exceptions\ExistsException;
+use Chubbyphp\Container\Exceptions\NotFoundException;
 
 final class Container implements ContainerInterface
 {
     /**
-     * @var ContainerInterface
+     * @var array<string, callable>
      */
-    private $minimalContainer;
+    private $factories = [];
 
     /**
      * @var array<string, callable>
@@ -20,11 +21,16 @@ final class Container implements ContainerInterface
     private $prototypeFactories = [];
 
     /**
+     * @var array<string, mixed>
+     */
+    private $services = [];
+
+    /**
      * @param array<string, callable> $factories
      */
     public function __construct(array $factories = [])
     {
-        $this->minimalContainer = new MinimalContainer($factories);
+        $this->factories($factories);
     }
 
     /**
@@ -45,7 +51,13 @@ final class Container implements ContainerInterface
             throw ExistsException::create($id, ExistsException::TYPE_PROTOTYPE_FACTORY);
         }
 
-        $this->minimalContainer->factory($id, $factory);
+        if (isset($this->factories[$id])) {
+            $factory = new Factory($this->factories[$id], $factory);
+        }
+
+        unset($this->services[$id]);
+
+        $this->factories[$id] = $factory;
 
         return $this;
     }
@@ -64,7 +76,7 @@ final class Container implements ContainerInterface
 
     public function prototypeFactory(string $id, callable $factory): ContainerInterface
     {
-        if ($this->minimalContainer->has($id)) {
+        if (isset($this->factories[$id])) {
             throw ExistsException::create($id, ExistsException::TYPE_FACTORY);
         }
 
@@ -88,7 +100,7 @@ final class Container implements ContainerInterface
             return $this->createFromPrototypeFactory($id);
         }
 
-        return $this->minimalContainer->get($id);
+        return $this->services[$id] ?? $this->services[$id] = $this->createFromFactory($id);
     }
 
     /**
@@ -96,7 +108,23 @@ final class Container implements ContainerInterface
      */
     public function has($id): bool
     {
-        return isset($this->prototypeFactories[$id]) || $this->minimalContainer->has($id);
+        return isset($this->factories[$id]) || isset($this->prototypeFactories[$id]);
+    }
+
+    /**
+     * @return mixed
+     */
+    private function createFromFactory(string $id)
+    {
+        if (!isset($this->factories[$id])) {
+            throw NotFoundException::create($id);
+        }
+
+        try {
+            return ($this->factories[$id])($this);
+        } catch (\Throwable $throwable) {
+            throw ContainerException::create($id, $throwable);
+        }
     }
 
     /**
