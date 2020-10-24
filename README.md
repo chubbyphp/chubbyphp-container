@@ -6,7 +6,6 @@
 [![Latest Stable Version](https://poser.pugx.org/chubbyphp/chubbyphp-container/v/stable.png)](https://packagist.org/packages/chubbyphp/chubbyphp-container)
 [![Total Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-container/downloads.png)](https://packagist.org/packages/chubbyphp/chubbyphp-container)
 [![Monthly Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-container/d/monthly)](https://packagist.org/packages/chubbyphp/chubbyphp-container)
-[![Daily Downloads](https://poser.pugx.org/chubbyphp/chubbyphp-container/d/daily)](https://packagist.org/packages/chubbyphp/chubbyphp-container)
 
 [![bugs](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=bugs)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)
 [![code_smells](https://sonarcloud.io/api/project_badges/measure?project=chubbyphp_chubbyphp-container&metric=code_smells)](https://sonarcloud.io/dashboard?id=chubbyphp_chubbyphp-container)

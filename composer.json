@@ -29,6 +29,7 @@
         "phpunit/phpunit": "^8.5.8|^9.4.1"
     },
     "conflict": {
+        "composer/composer": "<1.10.16",
         "ocramius/package-versions": ">=1.10"
     },
     "autoload": {
