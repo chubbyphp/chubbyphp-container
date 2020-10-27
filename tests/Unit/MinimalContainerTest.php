@@ -18,7 +18,7 @@ use Psr\Container\ContainerInterface;
 final class MinimalContainerTest extends TestCase
 {
     /**
-     * @covers \Chubbyphp\Container\Container::__construct
+     * @covers \Chubbyphp\Container\MinimalContainer::__construct
      */
     public function testConstruct(): void
     {
@@ -34,7 +34,7 @@ final class MinimalContainerTest extends TestCase
     }
 
     /**
-     * @covers \Chubbyphp\Container\Container::factories
+     * @covers \Chubbyphp\Container\MinimalContainer::factories
      */
     public function testFactories(): void
     {
@@ -52,7 +52,7 @@ final class MinimalContainerTest extends TestCase
     }
 
     /**
-     * @covers \Chubbyphp\Container\Container::factory
+     * @covers \Chubbyphp\Container\MinimalContainer::factory
      */
     public function testFactory(): void
     {
@@ -68,7 +68,7 @@ final class MinimalContainerTest extends TestCase
     }
 
     /**
-     * @covers \Chubbyphp\Container\Container::factory
+     * @covers \Chubbyphp\Container\MinimalContainer::factory
      */
     public function testFactoryExtend(): void
     {
@@ -104,7 +104,7 @@ final class MinimalContainerTest extends TestCase
     }
 
     /**
-     * @covers \Chubbyphp\Container\Container::factory
+     * @covers \Chubbyphp\Container\MinimalContainer::factory
      */
     public function testFactoryReplace(): void
     {
@@ -136,7 +136,7 @@ final class MinimalContainerTest extends TestCase
     }
 
     /**
-     * @covers \Chubbyphp\Container\Container::factory
+     * @covers \Chubbyphp\Container\MinimalContainer::factory
      */
     public function testFactoryReplaceAfterServiceInstanciated(): void
     {
@@ -156,7 +156,7 @@ final class MinimalContainerTest extends TestCase
     }
 
     /**
-     * @covers \Chubbyphp\Container\Container::get
+     * @covers \Chubbyphp\Container\MinimalContainer::get
      */
     public function testGetWithMissingId(): void
     {
@@ -169,7 +169,7 @@ final class MinimalContainerTest extends TestCase
     }
 
     /**
-     * @covers \Chubbyphp\Container\Container::get
+     * @covers \Chubbyphp\Container\MinimalContainer::get
      */
     public function testGetWithFactory(): void
     {
@@ -187,7 +187,7 @@ final class MinimalContainerTest extends TestCase
     }
 
     /**
-     * @covers \Chubbyphp\Container\Container::get
+     * @covers \Chubbyphp\Container\MinimalContainer::get
      */
     public function testGetWithFactoryAndException(): void
     {
@@ -201,15 +201,11 @@ final class MinimalContainerTest extends TestCase
             $container->get('unknown');
         });
 
-        $service = $container->get('id');
-
-        self::assertInstanceOf(\stdClass::class, $service);
-
-        self::assertSame($service, $container->get('id'));
+        $container->get('id');
     }
 
     /**
-     * @covers \Chubbyphp\Container\Container::has
+     * @covers \Chubbyphp\Container\MinimalContainer::has
      */
     public function testHasWithFactory(): void
     {

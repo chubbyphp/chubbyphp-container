@@ -360,11 +360,7 @@ final class ContainerTest extends TestCase
             $container->get('unknown');
         });
 
-        $service = $container->get('id');
-
-        self::assertInstanceOf(\stdClass::class, $service);
-
-        self::assertSame($service, $container->get('id'));
+        $container->get('id');
     }
 
     /**
@@ -382,11 +378,7 @@ final class ContainerTest extends TestCase
             $container->get('unknown');
         });
 
-        $service = $container->get('id');
-
-        self::assertInstanceOf(\stdClass::class, $service);
-
-        self::assertSame($service, $container->get('id'));
+        $container->get('id');
     }
 
     /**
