@@ -24,9 +24,7 @@ final class ContainerTest extends TestCase
     public function testConstruct(): void
     {
         $container = new Container([
-            'id' => static function () {
-                return new \stdClass();
-            },
+            'id' => static fn () => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -42,9 +40,7 @@ final class ContainerTest extends TestCase
         $container = new Container();
 
         $container->factories([
-            'id' => static function () {
-                return new \stdClass();
-            },
+            'id' => static fn () => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -62,13 +58,9 @@ final class ContainerTest extends TestCase
 
         $container = new Container();
 
-        $container->prototypeFactory('id', static function () {
-            return new \stdClass();
-        });
+        $container->prototypeFactory('id', static fn () => new \stdClass());
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
     }
 
     /**
@@ -78,9 +70,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         $service = $container->get('id');
 
@@ -162,15 +152,11 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         $service1 = $container->get('id');
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         self::assertNotSame($service1, $container->get('id'));
     }
@@ -183,9 +169,7 @@ final class ContainerTest extends TestCase
         $container = new Container();
 
         $container->prototypeFactories([
-            'id' => static function () {
-                return new \stdClass();
-            },
+            'id' => static fn () => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -203,13 +187,9 @@ final class ContainerTest extends TestCase
 
         $container = new Container();
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
-        $container->prototypeFactory('id', static function () {
-            return new \stdClass();
-        });
+        $container->prototypeFactory('id', static fn () => new \stdClass());
     }
 
     /**
@@ -219,9 +199,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->prototypeFactory('id', static function () {
-            return new \stdClass();
-        });
+        $container->prototypeFactory('id', static fn () => new \stdClass());
 
         $service = $container->get('id');
 
@@ -316,9 +294,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         $service = $container->get('id');
 
@@ -334,9 +310,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->prototypeFactory('id', static function () {
-            return new \stdClass();
-        });
+        $container->prototypeFactory('id', static fn () => new \stdClass());
 
         $service = $container->get('id');
 
@@ -390,9 +364,7 @@ final class ContainerTest extends TestCase
 
         self::assertFalse($container->has('id'));
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         self::assertTrue($container->has('id'));
     }
@@ -406,9 +378,7 @@ final class ContainerTest extends TestCase
 
         self::assertFalse($container->has('id'));
 
-        $container->prototypeFactory('id', static function () {
-            return new \stdClass();
-        });
+        $container->prototypeFactory('id', static fn () => new \stdClass());
 
         self::assertTrue($container->has('id'));
     }

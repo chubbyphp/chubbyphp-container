@@ -12,12 +12,12 @@ final class MinimalContainer implements ContainerInterface
     /**
      * @var array<string, callable>
      */
-    private $factories = [];
+    private array $factories = [];
 
     /**
      * @var array<string, mixed>
      */
-    private $services = [];
+    private array $services = [];
 
     /**
      * @param array<string, callable> $factories

@@ -23,9 +23,7 @@ final class MinimalContainerTest extends TestCase
     public function testConstruct(): void
     {
         $container = new MinimalContainer([
-            'id' => static function () {
-                return new \stdClass();
-            },
+            'id' => static fn () => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -41,9 +39,7 @@ final class MinimalContainerTest extends TestCase
         $container = new MinimalContainer();
 
         $container->factories([
-            'id' => static function () {
-                return new \stdClass();
-            },
+            'id' => static fn () => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -58,9 +54,7 @@ final class MinimalContainerTest extends TestCase
     {
         $container = new MinimalContainer();
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         $service = $container->get('id');
 
@@ -142,15 +136,11 @@ final class MinimalContainerTest extends TestCase
     {
         $container = new MinimalContainer();
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         $service1 = $container->get('id');
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         self::assertNotSame($service1, $container->get('id'));
     }
@@ -175,9 +165,7 @@ final class MinimalContainerTest extends TestCase
     {
         $container = new MinimalContainer();
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         $service = $container->get('id');
 
@@ -213,9 +201,7 @@ final class MinimalContainerTest extends TestCase
 
         self::assertFalse($container->has('id'));
 
-        $container->factory('id', static function () {
-            return new \stdClass();
-        });
+        $container->factory('id', static fn () => new \stdClass());
 
         self::assertTrue($container->has('id'));
     }

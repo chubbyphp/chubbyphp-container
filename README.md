@@ -36,7 +36,7 @@ There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-confi
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-container][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-container "^1.3"
+composer require chubbyphp/chubbyphp-container "^1.4"
 ```
 
 ## Usage
