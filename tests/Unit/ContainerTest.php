@@ -24,7 +24,7 @@ final class ContainerTest extends TestCase
     public function testConstruct(): void
     {
         $container = new Container([
-            'id' => static fn () => new \stdClass(),
+            'id' => static fn (): \stdClass => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -40,7 +40,7 @@ final class ContainerTest extends TestCase
         $container = new Container();
 
         $container->factories([
-            'id' => static fn () => new \stdClass(),
+            'id' => static fn (): \stdClass => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -58,9 +58,9 @@ final class ContainerTest extends TestCase
 
         $container = new Container();
 
-        $container->prototypeFactory('id', static fn () => new \stdClass());
+        $container->prototypeFactory('id', static fn (): \stdClass => new \stdClass());
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
     }
 
     /**
@@ -70,7 +70,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         $service = $container->get('id');
 
@@ -84,21 +84,21 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->factory('id', static function () {
+        $container->factory('id', static function (): \stdClass {
             $object = new \stdClass();
             $object->key1 = 'value1';
 
             return $object;
         });
 
-        $container->factory('id', static function (ContainerInterface $container, callable $previous) {
+        $container->factory('id', static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key2 = 'value2';
 
             return $object;
         });
 
-        $container->factory('id', static function (ContainerInterface $container, callable $previous) {
+        $container->factory('id', static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key3 = 'value3';
 
@@ -124,14 +124,14 @@ final class ContainerTest extends TestCase
             throw new \Exception('should not be called!');
         });
 
-        $container->factory('id', static function () {
+        $container->factory('id', static function (): \stdClass {
             $object = new \stdClass();
             $object->key1 = 'value1';
 
             return $object;
         });
 
-        $container->factory('id', static function (ContainerInterface $container, callable $previous) {
+        $container->factory('id', static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key2 = 'value2';
 
@@ -152,11 +152,11 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         $service1 = $container->get('id');
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         self::assertNotSame($service1, $container->get('id'));
     }
@@ -169,7 +169,7 @@ final class ContainerTest extends TestCase
         $container = new Container();
 
         $container->prototypeFactories([
-            'id' => static fn () => new \stdClass(),
+            'id' => static fn (): \stdClass => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -187,9 +187,9 @@ final class ContainerTest extends TestCase
 
         $container = new Container();
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
-        $container->prototypeFactory('id', static fn () => new \stdClass());
+        $container->prototypeFactory('id', static fn (): \stdClass => new \stdClass());
     }
 
     /**
@@ -199,7 +199,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->prototypeFactory('id', static fn () => new \stdClass());
+        $container->prototypeFactory('id', static fn (): \stdClass => new \stdClass());
 
         $service = $container->get('id');
 
@@ -213,21 +213,21 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->prototypeFactory('id', static function () {
+        $container->prototypeFactory('id', static function (): \stdClass {
             $object = new \stdClass();
             $object->key1 = 'value1';
 
             return $object;
         });
 
-        $container->prototypeFactory('id', static function (ContainerInterface $container, callable $previous) {
+        $container->prototypeFactory('id', static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key2 = 'value2';
 
             return $object;
         });
 
-        $container->prototypeFactory('id', static function (ContainerInterface $container, callable $previous) {
+        $container->prototypeFactory('id', static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key3 = 'value3';
 
@@ -253,14 +253,14 @@ final class ContainerTest extends TestCase
             throw new \Exception('should not be called!');
         });
 
-        $container->prototypeFactory('id', static function () {
+        $container->prototypeFactory('id', static function (): \stdClass {
             $object = new \stdClass();
             $object->key1 = 'value1';
 
             return $object;
         });
 
-        $container->prototypeFactory('id', static function (ContainerInterface $container, callable $previous) {
+        $container->prototypeFactory('id', static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key2 = 'value2';
 
@@ -294,7 +294,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         $service = $container->get('id');
 
@@ -310,7 +310,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->prototypeFactory('id', static fn () => new \stdClass());
+        $container->prototypeFactory('id', static fn (): \stdClass => new \stdClass());
 
         $service = $container->get('id');
 
@@ -364,7 +364,7 @@ final class ContainerTest extends TestCase
 
         self::assertFalse($container->has('id'));
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         self::assertTrue($container->has('id'));
     }
@@ -378,7 +378,7 @@ final class ContainerTest extends TestCase
 
         self::assertFalse($container->has('id'));
 
-        $container->prototypeFactory('id', static fn () => new \stdClass());
+        $container->prototypeFactory('id', static fn (): \stdClass => new \stdClass());
 
         self::assertTrue($container->has('id'));
     }

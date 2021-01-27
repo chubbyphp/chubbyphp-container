@@ -60,7 +60,7 @@ use Psr\Log\LoggerInterface;
 
 $container = new MinimalContainer();
 $container->factories([
-    MyService::class => static function (ContainerInterface $container) {
+    MyService::class => static function (ContainerInterface $container): MyService {
         return new MyService($container->get(LoggerInterface::class));
     },
 ]);
@@ -79,19 +79,19 @@ use Psr\Log\LoggerInterface;
 $container = new MinimalContainer();
 
 // new
-$container->factory(MyService::class, static function (ContainerInterface $container) {
+$container->factory(MyService::class, static function (ContainerInterface $container): MyService {
     return new MyService($container->get(LoggerInterface::class));
 });
 
 // existing (replace)
-$container->factory(MyService::class, static function (ContainerInterface $container) {
+$container->factory(MyService::class, static function (ContainerInterface $container): MyService {
     return new MyService($container->get(LoggerInterface::class));
 });
 
 // existing (extend)
 $container->factory(
     MyService::class,
-    static function (ContainerInterface $container, callable $previous) {
+    static function (ContainerInterface $container, callable $previous): MyService {
         $myService = $previous($container);
         $myService->setLogger($container->get(LoggerInterface::class));
 
@@ -155,7 +155,7 @@ use Psr\Log\LoggerInterface;
 
 $container = new Container();
 $container->prototypeFactories([
-    MyService::class => static function (ContainerInterface $container) {
+    MyService::class => static function (ContainerInterface $container): MyService {
         return new MyService($container->get(LoggerInterface::class));
     },
 ]);
@@ -176,19 +176,25 @@ use Psr\Log\LoggerInterface;
 $container = new Container();
 
 // new
-$container->prototypeFactory(MyService::class, static function (ContainerInterface $container) {
-    return new MyService($container->get(LoggerInterface::class));
-});
+$container->prototypeFactory(
+    MyService::class,
+    static function (ContainerInterface $container): MyService {
+        return new MyService($container->get(LoggerInterface::class));
+    }
+);
 
 // existing (replace)
-$container->prototypeFactory(MyService::class, static function (ContainerInterface $container) {
-    return new MyService($container->get(LoggerInterface::class));
-});
+$container->prototypeFactory(
+    MyService::class,
+    static function (ContainerInterface $container): MyService {
+        return new MyService($container->get(LoggerInterface::class));
+    }
+);
 
 // existing (extend)
 $container->prototypeFactory(
     MyService::class,
-    static function (ContainerInterface $container, callable $previous) {
+    static function (ContainerInterface $container, callable $previous): MyService {
         $myService = $previous($container);
         $myService->setLogger($container->get(LoggerInterface::class));
 

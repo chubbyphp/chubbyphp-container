@@ -21,14 +21,14 @@ final class FactoryTest extends TestCase
 
     public function testInvoke(): void
     {
-        $existingFactory = static function (ContainerInterface $container) {
+        $existingFactory = static function (ContainerInterface $container): \stdClass {
             $object = new \stdClass();
             $object->key1 = $container->get('key1');
 
             return $object;
         };
 
-        $factory = static function (ContainerInterface $container, callable $previous) {
+        $factory = static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key2 = $container->get('key2');
 
@@ -55,14 +55,14 @@ final class FactoryTest extends TestCase
 
     public function testIsLazy(): void
     {
-        $existingFactory = static function (ContainerInterface $container) {
+        $existingFactory = static function (ContainerInterface $container): \stdClass {
             $object = new \stdClass();
             $object->key1 = $container->get('key1');
 
             return $object;
         };
 
-        $factory = static function (ContainerInterface $container, callable $previous) {
+        $factory = static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key2 = $container->get('key2');
 

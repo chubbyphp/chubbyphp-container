@@ -23,7 +23,7 @@ final class MinimalContainerTest extends TestCase
     public function testConstruct(): void
     {
         $container = new MinimalContainer([
-            'id' => static fn () => new \stdClass(),
+            'id' => static fn (): \stdClass => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -39,7 +39,7 @@ final class MinimalContainerTest extends TestCase
         $container = new MinimalContainer();
 
         $container->factories([
-            'id' => static fn () => new \stdClass(),
+            'id' => static fn (): \stdClass => new \stdClass(),
         ]);
 
         $service = $container->get('id');
@@ -54,7 +54,7 @@ final class MinimalContainerTest extends TestCase
     {
         $container = new MinimalContainer();
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         $service = $container->get('id');
 
@@ -68,21 +68,21 @@ final class MinimalContainerTest extends TestCase
     {
         $container = new MinimalContainer();
 
-        $container->factory('id', static function () {
+        $container->factory('id', static function (): \stdClass {
             $object = new \stdClass();
             $object->key1 = 'value1';
 
             return $object;
         });
 
-        $container->factory('id', static function (ContainerInterface $container, callable $previous) {
+        $container->factory('id', static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key2 = 'value2';
 
             return $object;
         });
 
-        $container->factory('id', static function (ContainerInterface $container, callable $previous) {
+        $container->factory('id', static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key3 = 'value3';
 
@@ -108,14 +108,14 @@ final class MinimalContainerTest extends TestCase
             throw new \Exception('should not be called!');
         });
 
-        $container->factory('id', static function () {
+        $container->factory('id', static function (): \stdClass {
             $object = new \stdClass();
             $object->key1 = 'value1';
 
             return $object;
         });
 
-        $container->factory('id', static function (ContainerInterface $container, callable $previous) {
+        $container->factory('id', static function (ContainerInterface $container, callable $previous): \stdClass {
             $object = $previous($container);
             $object->key2 = 'value2';
 
@@ -136,11 +136,11 @@ final class MinimalContainerTest extends TestCase
     {
         $container = new MinimalContainer();
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         $service1 = $container->get('id');
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         self::assertNotSame($service1, $container->get('id'));
     }
@@ -165,7 +165,7 @@ final class MinimalContainerTest extends TestCase
     {
         $container = new MinimalContainer();
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         $service = $container->get('id');
 
@@ -201,7 +201,7 @@ final class MinimalContainerTest extends TestCase
 
         self::assertFalse($container->has('id'));
 
-        $container->factory('id', static fn () => new \stdClass());
+        $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         self::assertTrue($container->has('id'));
     }

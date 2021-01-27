@@ -6,11 +6,11 @@
 
 ```php
 // define some services
-$container['session_storage'] = static function (Container $container) {
+$container['session_storage'] = static function (Container $container): SessionStorage {
     return new SessionStorage('SESSION_ID');
 };
 
-$container['session'] = static function (Container $container) {
+$container['session'] = static function (Container $container): Session {
     return new Session($container['session_storage']);
 };
 
@@ -26,11 +26,11 @@ $session = $container['session'];
 
 ```php
 // define some services
-$container->factory('session_storage', static function () {
+$container->factory('session_storage', static function (): SessionStorage {
     return new SessionStorage('SESSION_ID');
 });
 
-$container->factory('session', static function (ContainerInterface $container) {
+$container->factory('session', static function (ContainerInterface $container): Session {
     return new Session($container->get('session_storage'));
 });
 
@@ -47,7 +47,7 @@ $session = $container->get('session');
 ### Pimple
 
 ```php
-$container['session'] = $container->factory(static function (Container $container) {
+$container['session'] = $container->factory(static function (Container $container): Session {
     return new Session($container['session_storage']);
 });
 ```
@@ -55,7 +55,7 @@ $container['session'] = $container->factory(static function (Container $containe
 ### Chubbyphp
 
 ```php
-$container->prototypeFactory('session', static function (ContainerInterface $container) {
+$container->prototypeFactory('session', static function (ContainerInterface $container): Session {
     return new Session($container->get('session_storage'));
 });
 ```
@@ -69,7 +69,7 @@ $container->prototypeFactory('session', static function (ContainerInterface $con
 $container['cookie_name'] = 'SESSION_ID';
 $container['session_storage_class'] = 'SessionStorage';
 
-$container['session_storage'] = static function (Container $container) {
+$container['session_storage'] = static function (Container $container): SessionStorage {
     return new $container['session_storage_class']($container['cookie_name']);
 };
 ```
@@ -81,7 +81,7 @@ $container['session_storage'] = static function (Container $container) {
 $container->factory('cookie_name', new Parameter('SESSION_ID'));
 $container->factory('session_storage_class', new Parameter('SessionStorage'));
 
-$container->factory('session_storage', static function (ContainerInterface $container) {
+$container->factory('session_storage', static function (ContainerInterface $container): SessionStorage {
     $sessionStorageClass = $container->get('session_storage_class');
 
     return new $sessionStorageClass($container->get('cookie_name'));
@@ -93,7 +93,7 @@ $container->factory('session_storage', static function (ContainerInterface $cont
 ### Pimple
 
 ```php
-$container['random_func'] = $container->protect(static function () {
+$container['random_func'] = $container->protect(static function (): int {
     return rand();
 });
 ```
@@ -101,7 +101,7 @@ $container['random_func'] = $container->protect(static function () {
 ### Chubbyphp
 
 ```php
-$container->factory('random_func', new Parameter(static function () {
+$container->factory('random_func', new Parameter(static function (): int {
     return rand();
 }));
 ```
@@ -111,11 +111,11 @@ $container->factory('random_func', new Parameter(static function () {
 ### Pimple
 
 ```php
-$container['session_storage'] = static function (Container $container) {
+$container['session_storage'] = static function (Container $container): SessionStorage {
     return new $container['session_storage_class']($container['cookie_name']);
 };
 
-$container->extend('session_storage', static function ($storage, $c) {
+$container->extend('session_storage', static function ($storage, $c): SessionStorage {
     $storage->...();
 
     return $storage;
@@ -125,13 +125,13 @@ $container->extend('session_storage', static function ($storage, $c) {
 ### Chubbyphp
 
 ```php
-$container->factory('session_storage', static function (ContainerInterface $container) {
+$container->factory('session_storage', static function (ContainerInterface $container): SessionStorage {
     $sessionStorageClass = $container->get('session_storage_class');
 
     return new $sessionStorageClass($container->get('cookie_name'));
 });
 
-$container->factory('session_storage', static function (ContainerInterface $c, callable $previous) {
+$container->factory('session_storage', static function (ContainerInterface $c, callable $previous): SessionStorage {
     $storage = $previous($c);
 
     $storage->...();
@@ -149,7 +149,7 @@ class FooProvider implements Pimple\ServiceProviderInterface
 {
     public function register(Container $pimple)
     {
-        $container['session_storage'] = static function (Container $container) {
+        $container['session_storage'] = static function (Container $container): SessionStorage {
             return new $container['session_storage_class']($container['cookie_name']);
         };
     }
@@ -166,7 +166,7 @@ class FooProvider
     public function __invoke(): array
     {
         return [
-            'session_storage' => static function (ContainerInterface $container) {
+            'session_storage' => static function (ContainerInterface $container): SessionStorage {
                 $sessionStorageClass = $container->get('session_storage_class');
 
                 return new $sessionStorageClass($container->get('cookie_name'));
@@ -183,7 +183,7 @@ $container->factories((new FooProvider())());
 ### Pimple
 
 ```php
-$container['session'] = static function (Container $container) {
+$container['session'] = static function (Container $container): Session {
     return new Session($container['session_storage']);
 };
 
