@@ -28,7 +28,7 @@ There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-confi
 
 ## Requirements
 
- * php: ^7.2|^8.0
+ * php: ^7.4|^8.0
  * [psr/container][2]: ^1.0
 
 ## Installation
