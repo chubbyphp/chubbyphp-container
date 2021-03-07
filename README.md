@@ -22,7 +22,7 @@
 
 ## Description
 
-A PSR-11 container implementation. [DI Container Benchmark][3].
+A minimal Dependency Injection Container (DIC) which implements PSR-11. [DI Container Benchmark][3].
 
 There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-config][4].
 
