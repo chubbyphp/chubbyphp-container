@@ -53,19 +53,14 @@ final class MinimalContainer implements ContainerInterface
     }
 
     /**
-     * @param string $id
-     *
      * @return mixed
      */
-    public function get($id)
+    public function get(string $id)
     {
         return $this->services[$id] ?? $this->services[$id] = $this->createFromFactory($id);
     }
 
-    /**
-     * @param string $id
-     */
-    public function has($id): bool
+    public function has(string $id): bool
     {
         return isset($this->factories[$id]);
     }

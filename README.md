@@ -29,14 +29,14 @@ There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-confi
 ## Requirements
 
  * php: ^7.4|^8.0
- * [psr/container][2]: ^1.0
+ * [psr/container][2]: ^1.1|^2.0
 
 ## Installation
 
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-container][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-container "^1.4"
+composer require chubbyphp/chubbyphp-container "^2.0"
 ```
 
 ## Usage

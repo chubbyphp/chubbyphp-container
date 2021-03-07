@@ -90,11 +90,9 @@ final class Container implements ContainerInterface
     }
 
     /**
-     * @param string $id
-     *
      * @return mixed
      */
-    public function get($id)
+    public function get(string $id)
     {
         if (isset($this->prototypeFactories[$id])) {
             return $this->createFromPrototypeFactory($id);
@@ -103,10 +101,7 @@ final class Container implements ContainerInterface
         return $this->services[$id] ?? $this->services[$id] = $this->createFromFactory($id);
     }
 
-    /**
-     * @param string $id
-     */
-    public function has($id): bool
+    public function has(string $id): bool
     {
         return isset($this->factories[$id]) || isset($this->prototypeFactories[$id]);
     }
