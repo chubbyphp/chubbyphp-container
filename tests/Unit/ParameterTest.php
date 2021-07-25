@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Container\Unit;
 
 use Chubbyphp\Container\Parameter;
-use Chubbyphp\Mock\MockByCallsTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,8 +14,6 @@ use PHPUnit\Framework\TestCase;
  */
 final class ParameterTest extends TestCase
 {
-    use MockByCallsTrait;
-
     /**
      * @dataProvider provideData
      *
