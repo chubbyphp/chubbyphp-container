@@ -213,6 +213,6 @@ Dominik Zogg 2021
 
 [1]: https://packagist.org/packages/chubbyphp/chubbyphp-container
 [2]: https://packagist.org/packages/psr/container
-[3]: https://rawgit.com/kocsismate/php-di-container-benchmarks/master/var/benchmark.html
+[3]: https://kocsismate.github.io/php-di-container-benchmarks/benchmark.html
 [4]: https://github.com/chubbyphp/chubbyphp-laminas-config
 [5]: doc/MigrateFromPimple.md
