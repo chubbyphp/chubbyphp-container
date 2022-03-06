@@ -14,18 +14,18 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
-        "psr/container": "^1.1|^2.0"
+        "php": "^8.0",
+        "psr/container": "^1.1.2|^2.0.2"
     },
     "require-dev": {
         "chubbyphp/chubbyphp-dev-helper": "dev-master",
         "chubbyphp/chubbyphp-mock": "^1.6.1",
-        "infection/infection": "^0.25.3",
-        "php-coveralls/php-coveralls": "^2.5.1",
+        "infection/infection": "^0.26.5",
+        "php-coveralls/php-coveralls": "^2.5.2",
         "phploc/phploc": "^7.0.2",
         "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan": "^1.1.2",
-        "phpunit/phpunit": "^9.5.10"
+        "phpstan/phpstan": "^1.4.8",
+        "phpunit/phpunit": "^9.5.17"
     },
     "autoload": {
         "psr-4": { "Chubbyphp\\Container\\": "src/" }
@@ -34,11 +34,15 @@
         "psr-4": { "Chubbyphp\\Tests\\Container\\": "tests/" }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "infection/extension-installer": true
+        }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "2.1-dev"
         }
     },
     "scripts": {
