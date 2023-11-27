@@ -15,18 +15,16 @@ use PHPUnit\Framework\TestCase;
 final class ParameterTest extends TestCase
 {
     /**
-     * @dataProvider provideData
-     *
-     * @param mixed $data
+     * @dataProvider provideInvokeCases
      */
-    public function testInvoke($data): void
+    public function testInvoke(mixed $data): void
     {
         $parameter = new Parameter($data);
 
         self::assertSame($data, $parameter());
     }
 
-    public function provideData(): array
+    public function provideInvokeCases(): iterable
     {
         return [
             'bool' => [

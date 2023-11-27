@@ -23,7 +23,7 @@ final class ExistsExceptionTest extends TestCase
     }
 
     /**
-     * @dataProvider typeProvider
+     * @dataProvider provideCreateCases
      */
     public function testCreate(string $type): void
     {
@@ -36,7 +36,7 @@ final class ExistsExceptionTest extends TestCase
     /**
      * @return array<string, array<string, string>>
      */
-    public function typeProvider(): array
+    public function provideCreateCases(): iterable
     {
         return [
             ExistsException::TYPE_FACTORY => ['type' => ExistsException::TYPE_FACTORY],

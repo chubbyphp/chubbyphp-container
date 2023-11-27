@@ -9,9 +9,7 @@ final class Parameter
     /**
      * @param mixed $parameter
      */
-    public function __construct(private $parameter)
-    {
-    }
+    public function __construct(private $parameter) {}
 
     /**
      * @return mixed
