@@ -36,7 +36,7 @@ final class ExistsExceptionTest extends TestCase
     /**
      * @return array<string, array<string, string>>
      */
-    public function provideCreateCases(): iterable
+    public static function provideCreateCases(): iterable
     {
         return [
             ExistsException::TYPE_FACTORY => ['type' => ExistsException::TYPE_FACTORY],

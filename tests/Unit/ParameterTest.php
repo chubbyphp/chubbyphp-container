@@ -24,7 +24,7 @@ final class ParameterTest extends TestCase
         self::assertSame($data, $parameter());
     }
 
-    public function provideInvokeCases(): iterable
+    public static function provideInvokeCases(): iterable
     {
         return [
             'bool' => [
