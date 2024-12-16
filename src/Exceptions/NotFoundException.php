@@ -15,6 +15,6 @@ final class NotFoundException extends \LogicException implements NotFoundExcepti
 
     public static function create(string $id): self
     {
-        return new self(sprintf('There is no service with id "%s"', $id), 3);
+        return new self(\sprintf('There is no service with id "%s"', $id), 3);
     }
 }

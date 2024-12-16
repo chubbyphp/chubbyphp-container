@@ -29,7 +29,7 @@ final class ExistsExceptionTest extends TestCase
     {
         $exception = ExistsException::create('id', $type);
 
-        self::assertSame(sprintf('Factory with id "id" already exists as "%s"', $type), $exception->getMessage());
+        self::assertSame(\sprintf('Factory with id "id" already exists as "%s"', $type), $exception->getMessage());
         self::assertSame(2, $exception->getCode());
     }
 

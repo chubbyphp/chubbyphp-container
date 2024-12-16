@@ -18,6 +18,6 @@ final class ExistsException extends \LogicException implements ContainerExceptio
 
     public static function create(string $id, string $type): self
     {
-        return new self(sprintf('Factory with id "%s" already exists as "%s"', $id, $type), 2);
+        return new self(\sprintf('Factory with id "%s" already exists as "%s"', $id, $type), 2);
     }
 }

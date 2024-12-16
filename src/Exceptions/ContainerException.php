@@ -15,6 +15,6 @@ final class ContainerException extends \LogicException implements ContainerExcep
 
     public static function create(string $id, \Throwable $previous): self
     {
-        return new self(sprintf('Could not create service with id "%s"', $id), 1, $previous);
+        return new self(\sprintf('Could not create service with id "%s"', $id), 1, $previous);
     }
 }
