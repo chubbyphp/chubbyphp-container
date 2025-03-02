@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Container\Unit;
 
 use Chubbyphp\Container\Factory;
-use Chubbyphp\Mock\Call;
-use Chubbyphp\Mock\MockByCallsTrait;
+use Chubbyphp\Mock\MockMethod\WithReturn;
+use Chubbyphp\Mock\MockObjectBuilder;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -17,8 +17,6 @@ use Psr\Container\ContainerInterface;
  */
 final class FactoryTest extends TestCase
 {
-    use MockByCallsTrait;
-
     public function testInvoke(): void
     {
         $existingFactory = static function (ContainerInterface $container): \stdClass {
@@ -35,10 +33,12 @@ final class FactoryTest extends TestCase
             return $object;
         };
 
+        $builder = new MockObjectBuilder();
+
         /** @var ContainerInterface $container */
-        $container = $this->getMockByCalls(ContainerInterface::class, [
-            Call::create('get')->with('key1')->willReturn('value1'),
-            Call::create('get')->with('key2')->willReturn('value2'),
+        $container = $builder->create(ContainerInterface::class, [
+            new WithReturn('get', ['key1'], 'value1'),
+            new WithReturn('get', ['key2'], 'value2'),
         ]);
 
         $extendedFactory = new Factory($existingFactory, $factory);
