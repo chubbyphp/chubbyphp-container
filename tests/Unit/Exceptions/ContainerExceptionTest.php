@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Container\Unit\Exceptions;
 
 use Chubbyphp\Container\Exceptions\ContainerException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Chubbyphp\Container\Exceptions\ContainerException
- *
  * @internal
  */
+#[CoversClass(ContainerException::class)]
 final class ContainerExceptionTest extends TestCase
 {
     public function testConstruct(): void

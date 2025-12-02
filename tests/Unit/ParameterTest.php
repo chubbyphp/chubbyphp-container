@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Container\Unit;
 
 use Chubbyphp\Container\Parameter;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Chubbyphp\Container\Parameter
- *
  * @internal
  */
+#[CoversClass(Parameter::class)]
 final class ParameterTest extends TestCase
 {
-    /**
-     * @dataProvider provideInvokeCases
-     */
+    #[DataProvider('provideInvokeCases')]
     public function testInvoke(mixed $data): void
     {
         $parameter = new Parameter($data);

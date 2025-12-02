@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Container\Unit\Exceptions;
 
 use Chubbyphp\Container\Exceptions\NotFoundException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Chubbyphp\Container\Exceptions\NotFoundException
- *
  * @internal
  */
+#[CoversClass(NotFoundException::class)]
 final class NotFoundExceptionTest extends TestCase
 {
     public function testConstruct(): void

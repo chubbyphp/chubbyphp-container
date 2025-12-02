@@ -7,14 +7,14 @@ namespace Chubbyphp\Tests\Container\Unit;
 use Chubbyphp\Container\Factory;
 use Chubbyphp\Mock\MockMethod\WithReturn;
 use Chubbyphp\Mock\MockObjectBuilder;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 /**
- * @covers \Chubbyphp\Container\Factory
- *
  * @internal
  */
+#[CoversClass(Factory::class)]
 final class FactoryTest extends TestCase
 {
     public function testInvoke(): void

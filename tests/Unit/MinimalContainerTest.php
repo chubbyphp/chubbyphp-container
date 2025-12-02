@@ -7,14 +7,14 @@ namespace Chubbyphp\Tests\Container\Unit;
 use Chubbyphp\Container\Exceptions\ContainerException;
 use Chubbyphp\Container\Exceptions\NotFoundException;
 use Chubbyphp\Container\MinimalContainer;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 /**
- * @covers \Chubbyphp\Container\MinimalContainer
- *
  * @internal
  */
+#[CoversClass(MinimalContainer::class)]
 final class MinimalContainerTest extends TestCase
 {
     /**
@@ -104,7 +104,7 @@ final class MinimalContainerTest extends TestCase
     {
         $container = new MinimalContainer();
 
-        $container->factory('id', static function (): void {
+        $container->factory('id', static function (): never {
             throw new \Exception('should not be called!');
         });
 

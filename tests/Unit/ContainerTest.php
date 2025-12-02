@@ -8,14 +8,14 @@ use Chubbyphp\Container\Container;
 use Chubbyphp\Container\Exceptions\ContainerException;
 use Chubbyphp\Container\Exceptions\ExistsException;
 use Chubbyphp\Container\Exceptions\NotFoundException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 /**
- * @covers \Chubbyphp\Container\Container
- *
  * @internal
  */
+#[CoversClass(Container::class)]
 final class ContainerTest extends TestCase
 {
     /**
@@ -120,7 +120,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->factory('id', static function (): void {
+        $container->factory('id', static function (): never {
             throw new \Exception('should not be called!');
         });
 
@@ -249,7 +249,7 @@ final class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $container->prototypeFactory('id', static function (): void {
+        $container->prototypeFactory('id', static function (): never {
             throw new \Exception('should not be called!');
         });
 

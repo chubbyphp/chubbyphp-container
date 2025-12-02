@@ -89,10 +89,7 @@ final class Container implements ContainerInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function get(string $id)
+    public function get(string $id): mixed
     {
         if (isset($this->prototypeFactories[$id])) {
             return $this->createFromPrototypeFactory($id);
@@ -106,10 +103,7 @@ final class Container implements ContainerInterface
         return isset($this->factories[$id]) || isset($this->prototypeFactories[$id]);
     }
 
-    /**
-     * @return mixed
-     */
-    private function createFromFactory(string $id)
+    private function createFromFactory(string $id): mixed
     {
         if (!isset($this->factories[$id])) {
             throw NotFoundException::create($id);
@@ -122,10 +116,7 @@ final class Container implements ContainerInterface
         }
     }
 
-    /**
-     * @return mixed
-     */
-    private function createFromPrototypeFactory(string $id)
+    private function createFromPrototypeFactory(string $id): mixed
     {
         try {
             return ($this->prototypeFactories[$id])($this);
