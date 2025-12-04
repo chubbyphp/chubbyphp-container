@@ -28,7 +28,7 @@ There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-confi
 
 ## Requirements
 
- * php: ^8.2
+ * php: ^8.3
  * [psr/container][2]: ^2.0.2
 
 ## Installation
@@ -36,7 +36,7 @@ There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-confi
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-container][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-container "^2.3"
+composer require chubbyphp/chubbyphp-container "^2.4"
 ```
 
 ## Usage

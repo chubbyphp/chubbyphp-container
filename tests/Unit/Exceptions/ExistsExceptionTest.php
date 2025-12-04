@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Chubbyphp\Tests\Container\Unit\Exceptions;
 
 use Chubbyphp\Container\Exceptions\ExistsException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,9 +23,7 @@ final class ExistsExceptionTest extends TestCase
         new ExistsException('test', 0);
     }
 
-    /**
-     * @dataProvider provideCreateCases
-     */
+    #[DataProvider('provideCreateCases')]
     public function testCreate(string $type): void
     {
         $exception = ExistsException::create('id', $type);

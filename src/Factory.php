@@ -24,10 +24,7 @@ final class Factory
         $this->factory = $factory;
     }
 
-    /**
-     * @return mixed
-     */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container): mixed
     {
         return ($this->factory)($container, $this->previousFactory);
     }

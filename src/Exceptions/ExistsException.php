@@ -8,8 +8,8 @@ use Psr\Container\ContainerExceptionInterface;
 
 final class ExistsException extends \LogicException implements ContainerExceptionInterface
 {
-    public const TYPE_FACTORY = 'factory';
-    public const TYPE_PROTOTYPE_FACTORY = 'prototype factory';
+    public const string TYPE_FACTORY = 'factory';
+    public const string TYPE_PROTOTYPE_FACTORY = 'prototype factory';
 
     private function __construct(string $message, int $code, ?\Throwable $previous = null)
     {
