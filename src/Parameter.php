@@ -6,10 +6,7 @@ namespace Chubbyphp\Container;
 
 final class Parameter
 {
-    /**
-     * @param mixed $parameter
-     */
-    public function __construct(private $parameter) {}
+    public function __construct(private readonly mixed $parameter) {}
 
     public function __invoke(): mixed
     {

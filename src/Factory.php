@@ -11,12 +11,12 @@ final class Factory
     /**
      * @var callable
      */
-    private $previousFactory;
+    private readonly mixed $previousFactory;
 
     /**
      * @var callable
      */
-    private $factory;
+    private readonly mixed $factory;
 
     public function __construct(callable $previousFactory, callable $factory)
     {
