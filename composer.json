@@ -24,7 +24,8 @@
         "php-coveralls/php-coveralls": "^2.9.1",
         "phpstan/extension-installer": "^1.4.3",
         "phpstan/phpstan": "^2.1.33",
-        "phpunit/phpunit": "^12.5.6"
+        "phpunit/phpunit": "^12.5.6",
+        "pimple/pimple": "^3.6"
     },
     "autoload": {
         "psr-4": { "Chubbyphp\\Container\\": "src/" }
@@ -41,7 +42,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.4-dev"
+            "dev-master": "2.5-dev"
         }
     },
     "scripts": {

@@ -148,7 +148,7 @@ final class ContainerTest extends TestCase
     /**
      * @covers \Chubbyphp\Container\Container::factory
      */
-    public function testFactoryReplaceAfterServiceInstanciated(): void
+    public function testFactoryReplaceAfterServiceInstantiated(): void
     {
         $container = new Container();
 
@@ -272,6 +272,47 @@ final class ContainerTest extends TestCase
         self::assertInstanceOf(\stdClass::class, $service);
         self::assertSame('value1', $service->key1);
         self::assertSame('value2', $service->key2);
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::getFactory
+     */
+    public function testGetFactoryWithMissingId(): void
+    {
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage('There is no service with id "id"');
+        $this->expectExceptionCode(3);
+
+        $container = new Container();
+        $container->getFactory('id');
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::getFactory
+     */
+    public function testGetFactoryWithFactory(): void
+    {
+        $container = new Container();
+
+        $factory = static fn (): \stdClass => new \stdClass();
+
+        $container->factory('id', $factory);
+
+        self::assertSame($factory, $container->getFactory('id'));
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::getFactory
+     */
+    public function testGetFactoryWithPrototypeFactory(): void
+    {
+        $container = new Container();
+
+        $factory = static fn (): \stdClass => new \stdClass();
+
+        $container->prototypeFactory('id', $factory);
+
+        self::assertSame($factory, $container->getFactory('id'));
     }
 
     /**

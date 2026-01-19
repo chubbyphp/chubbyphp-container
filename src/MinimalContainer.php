@@ -52,6 +52,11 @@ final class MinimalContainer implements ContainerInterface
         return $this;
     }
 
+    public function getFactory(string $id): callable
+    {
+        return $this->factories[$id] ?? throw NotFoundException::create($id);
+    }
+
     public function get(string $id): mixed
     {
         return $this->services[$id] ?? $this->services[$id] = $this->createFromFactory($id);

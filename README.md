@@ -36,7 +36,7 @@ There is a laminas service manager adapter at [chubbyphp/chubbyphp-laminas-confi
 Through [Composer](http://getcomposer.org) as [chubbyphp/chubbyphp-container][1].
 
 ```sh
-composer require chubbyphp/chubbyphp-container "^2.4"
+composer require chubbyphp/chubbyphp-container "^2.5"
 ```
 
 ## Usage
@@ -110,6 +110,21 @@ use Chubbyphp\Container\Parameter;
 
 $container = new MinimalContainer();
 $container->factory('key', new Parameter('value'));
+```
+
+#### Get factory
+
+```php
+<?php
+
+use App\Service\MyService;
+use Chubbyphp\Container\MinimalContainer;
+
+$container = new MinimalContainer();
+
+$myServiceFactory = $container->getFactory(MyService::class);
+
+$myService = $myServiceFactory($container);
 ```
 
 #### Get

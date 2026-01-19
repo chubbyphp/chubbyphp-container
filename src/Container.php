@@ -89,6 +89,11 @@ final class Container implements ContainerInterface
         return $this;
     }
 
+    public function getFactory(string $id): callable
+    {
+        return $this->prototypeFactories[$id] ?? $this->factories[$id] ?? throw NotFoundException::create($id);
+    }
+
     public function get(string $id): mixed
     {
         if (isset($this->prototypeFactories[$id])) {

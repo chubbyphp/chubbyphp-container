@@ -82,9 +82,7 @@ $container->factory('cookie_name', new Parameter('SESSION_ID'));
 $container->factory('session_storage_class', new Parameter('SessionStorage'));
 
 $container->factory('session_storage', static function (ContainerInterface $container): SessionStorage {
-    $sessionStorageClass = $container->get('session_storage_class');
-
-    return new $sessionStorageClass($container->get('cookie_name'));
+    return new ($container->get('session_storage_class'))($container->get('cookie_name'));
 });
 ```
 
@@ -192,4 +190,10 @@ $sessionFunction = $container->raw('session');
 
 ### Chubbyphp
 
-There is no equivalent to this functionality.
+```php
+$container->factory('session', static function (ContainerInterface $container): Session {
+    return new Session($container->get('session_storage'));
+});
+
+$sessionFunction = $container->getFactory('session');
+```

@@ -15,6 +15,11 @@
         }
     },
     "mutators": {
-        "@default": true
+        "@default": true,
+        "Coalesce": {
+            "ignore": [
+                "Chubbyphp\\Container\\Container::getFactory"
+            ]
+        }
     }
 }

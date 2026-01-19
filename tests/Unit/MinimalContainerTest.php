@@ -132,7 +132,7 @@ final class MinimalContainerTest extends TestCase
     /**
      * @covers \Chubbyphp\Container\MinimalContainer::factory
      */
-    public function testFactoryReplaceAfterServiceInstanciated(): void
+    public function testFactoryReplaceAfterServiceInstantiated(): void
     {
         $container = new MinimalContainer();
 
@@ -143,6 +143,33 @@ final class MinimalContainerTest extends TestCase
         $container->factory('id', static fn (): \stdClass => new \stdClass());
 
         self::assertNotSame($service1, $container->get('id'));
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::getFactory
+     */
+    public function testGetFactoryWithMissingId(): void
+    {
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage('There is no service with id "id"');
+        $this->expectExceptionCode(3);
+
+        $container = new MinimalContainer();
+        $container->getFactory('id');
+    }
+
+    /**
+     * @covers \Chubbyphp\Container\Container::getFactory
+     */
+    public function testGetFactoryWithFactory(): void
+    {
+        $container = new MinimalContainer();
+
+        $factory = static fn (): \stdClass => new \stdClass();
+
+        $container->factory('id', $factory);
+
+        self::assertSame($factory, $container->getFactory('id'));
     }
 
     /**
