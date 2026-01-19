@@ -6,6 +6,10 @@ namespace Chubbyphp\Tests\Container\Integration;
 
 use Chubbyphp\Container\Container as ChubbyphpContainer;
 use Chubbyphp\Container\Parameter;
+use Chubbyphp\Tests\Container\Helper\ChubbyphpFooProvider;
+use Chubbyphp\Tests\Container\Helper\PimpleFooProvider;
+use Chubbyphp\Tests\Container\Helper\Session;
+use Chubbyphp\Tests\Container\Helper\SessionStorage;
 use PHPUnit\Framework\TestCase;
 use Pimple\Container as PimpleContainer;
 

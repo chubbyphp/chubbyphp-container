@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Chubbyphp\Tests\Container\Integration;
+namespace Chubbyphp\Tests\Container\Helper;
 
 use Pimple\Container as PimpleContainer;
 use Pimple\ServiceProviderInterface;
