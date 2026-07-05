@@ -19,12 +19,12 @@
     },
     "require-dev": {
         "chubbyphp/chubbyphp-dev-helper": "dev-master",
-        "chubbyphp/chubbyphp-mock": "^2.1.2",
-        "infection/infection": "^0.32.3",
+        "chubbyphp/chubbyphp-mock": "^2.2.1",
+        "infection/infection": "^0.34.0",
         "php-coveralls/php-coveralls": "^2.9.1",
         "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan": "^2.1.33",
-        "phpunit/phpunit": "^12.5.6",
+        "phpstan/phpstan": "^2.2.5",
+        "phpunit/phpunit": "^12.5.30",
         "pimple/pimple": "^3.6"
     },
     "autoload": {
